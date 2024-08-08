@@ -13,5 +13,5 @@ func main() {
 			"message": "CIAE Test",
 		})
 	})
-	r.Run()
+	r.Run(":8080")
 }
