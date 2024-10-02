@@ -1,0 +1,104 @@
+body, html {
+    background-color: #ACDFFF;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 1vw; /* 뷰포트 너비에 따라 전체 텍스트 크기가 조정됨 */
+}
+
+li {
+    display: inline-block;
+    align-self: center;
+}
+
+nav {
+    width: 19.8958vw;
+    height: 49.5313vw;
+    flex-shrink: 0;
+    border-radius: var(--Corner-Extra-large, 1.4583vw);
+    background: #FFF;
+    box-shadow: 0.7813vw 0.7813vw 0.7813vw 0.0000vw rgba(0, 0, 0, 0.25);
+    position: absolute;
+    left: 5vw;
+    top: 5vh;
+    display: flex;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navAll {
+    margin-top: 10.4167vw;
+}
+
+.logo {
+    width: 10.0000vw;
+    height: 10.0000vw;
+    flex-shrink: 0;
+    background:white 20% / cover no-repeat;
+    background-color: transparent;
+    position: absolute;
+    top: -0.9722vw;
+    left: 0.0694vw;
+}
+
+.home a, .bookshelf a, .turtle a {
+    display: flex;
+    width: 14.6875vw;
+    height: 2.9688vw;
+    padding: 0.5208vw;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5208vw;
+    flex-shrink: 0;
+    border-radius: var(--Corner-Full, 52.0833vw);
+    background: #FFF;
+    box-shadow: 0.0000vw 0.2083vw 0.2083vw 0.0000vw rgba(0, 0, 0, 0.25);
+    color: #606060;
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-size: 1.2vw;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4vh;
+}
+
+.learning a {
+    display: flex;
+    width: 14.6875vw;
+    height: 2.9688vw;
+    padding: 0.5208vw;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5208vw;
+    flex-shrink: 0;
+    border-radius: var(--Corner-Full, 52.0833vw);
+    background: #52BDFF;
+    box-shadow: 0.0000vw 0.2083vw 0.2083vw 0.0000vw rgba(0, 0, 0, 0.25);
+    color: #000;
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-size: 1.2vw;
+    font-weight: 700;
+    margin-top: 18.8056vw;
+}
+
+/* 미디어 쿼리: 화면이 작은 경우 레이아웃 조정 */
+@media (max-width: 768px) {
+    nav {
+        width: 40vw;
+        height: 60vh;
+        left: 2vw;
+        top: 2vh;
+    }
+
+    .home a, .bookshelf a, .turtle a, .recommend a, .learning a {
+        width: 30vw;
+        height: 7vh;
+        font-size: 2.5vw;
+    }
+}
