@@ -46,10 +46,10 @@ def login():
 @app.route('/authorize')
 def authorize():
     google = oauth.create_client('google')
-    token = google.authorize_access_token() 
+    token = google.authorize_access_token()  # not really necessary to assign to "token"
     resp = google.get('userinfo')  
     user_info = resp.json()
-    user = oauth.google.userinfo()
+    # user = oauth.google.userinfo()
     session['profile'] = user_info
     session.permanent = True  
     return redirect('/')
