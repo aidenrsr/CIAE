@@ -8,7 +8,7 @@ def create_app(test_config=None):
     app.config["KEY"] = "minyong926"
 
     from .views import views
-    from .auth import auth
+    from . import auth
     from . import db
 
     db.init_app(app)
