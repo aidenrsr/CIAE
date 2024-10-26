@@ -1,5 +1,7 @@
 import './css/Bookshelf.css';
 import React from 'react';
+
+
 function Books(props) {
     return(
     <li className='booklist'>
@@ -20,12 +22,11 @@ export default function Bookshelf() {
             <div className='menu'>
                 <p className='pageName'>내 서재</p>
                 <p className='logOut'>로그아웃</p>
-
                 <ul className='bookStorage1'>
-                        <Books src='img/Mainbook.png' bookName='theHen' href='/Learning'/>
-                        <Books src='/' bookName='love'/>
-                        <Books src='/' bookName='tomato'/>     
-                        <Books src='/' bookName='tomato'/> 
+                        <Books src='/' bookName='' href='/Learning'/>
+                        <Yet />
+                        <Yet />
+                        <Yet />
                 </ul>
 
                 <ul className='bookStorage2'>

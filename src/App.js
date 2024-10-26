@@ -6,7 +6,10 @@ import Learning from './components/Learning';
 import Bookshelf from './components/Bookshelf';
 import Home from './components/Home';
 import Login from './components/Login';  // Import Login component
-
+import DeepSea from './components/TurtleVillage/DeepSea';  // Add this import
+import Space from './components/TurtleVillage/Space';  // Add this import
+import Sky from './components/TurtleVillage/Sky';  // Add this import
+import Forest from './components/TurtleVillage/Forest';  // Add this import
 // 공통적인 List 컴포넌트
 function List(props) {
   return (
@@ -21,7 +24,7 @@ function Logo() {
   return (
     <li>
       <a href='/Home'><img className='logo' src='/CIAE로고 2.png' alt='logo' /></a>
-    </li>
+    </li> 
   );
 }
 
@@ -29,22 +32,27 @@ function App() {
   // 현재 경로 확인
   const location = useLocation();
   
-  // Learning 페이지나 Login 페이지에서 네비게이션을 숨김
-  const isNavigationVisible = !(location.pathname === '/Learning' || location.pathname === '/Login');
-
+  // Update this condition to include DeepSea
+  const hideBackgroundPaths = ['/Learning', '/Login'];
+  const hideNavPaths = ['/Learning', '/Login'];
+  const showNav = !hideNavPaths.includes(location.pathname);
+  const showBackground = !hideBackgroundPaths.includes(location.pathname);
   return (
       <div>
-        {isNavigationVisible && (
-          <nav>
-            <ul className='navAll'>
-              <Logo />
-              <List route='/Bookshelf' name='내 서재' thing='bookshelf' />
-              <List route='/Turtle' name='거북이 수족관' thing='turtle' />
-              <List route='/Learning' name='독서 시작하기' thing='learning' />
-            </ul>
-          </nav>
+        {showBackground && (
+          <div className='Main'>
+            <img src='/MainBackground.png' className='MainBackground' alt='MainBackground'/>
+            {showNav && (
+            <nav>
+              <ul className='navAll'>
+                <Logo />
+                <List route='/Bookshelf' name='내 서재' thing='bookshelf' />
+                <List route='/Turtle' name='거북이 미니게임' thing='turtle' />
+                <List route='/Learning' name='독서 시작하기' thing='learning' />
+              </ul>
+            </nav>
         )}
-
+          </div>)}
         {/* 페이지별 라우팅 설정 */}
         <Routes>
           <Route path="/" element={<Home />} />
@@ -53,8 +61,12 @@ function App() {
           <Route path="/Turtle" element={<Turtle />} />
           <Route path="/Learning" element={<Learning />} /> {/* Learning에서 네비게이션 바 숨김 */}
           <Route path="/Login" element={<Login />} />  {/* Add route for Login */}
-        </Routes>
-      </div>
+          <Route path="/DeepSea" element={<DeepSea />} />  {/* Add this route */}
+          <Route path="/Space" element={<Space />} />  {/* Add this route */}
+          <Route path="/Sky" element={<Sky />} />  {/* Add this route */}
+          <Route path="/Forest" element={<Forest />} />  {/* Add this route */}
+      </Routes>
+    </div>
   );
 }
 

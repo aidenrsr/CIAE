@@ -8,6 +8,12 @@ body, html {
     font-size: 1vw; /* 뷰포트 너비에 따라 전체 텍스트 크기가 조정됨 */
 }
 
+.Main {
+    width: 100vw;
+    height: 100vh;
+}
+
+
 li {
     display: inline-block;
     align-self: center;
@@ -24,6 +30,7 @@ nav {
     left: 5vw;
     top: 5vh;
     display: flex;
+    z-index: 1;
 }
 
 a {
@@ -32,7 +39,7 @@ a {
 }
 
 .navAll {
-    margin-top: 10.4167vw;
+    margin-top: 9.4167vw;
 }
 
 .logo {
@@ -49,7 +56,7 @@ a {
 .home a, .bookshelf a, .turtle a {
     display: flex;
     width: 14.6875vw;
-    height: 2.9688vw;
+    height: 2.5688vw;
     padding: 0.5208vw;
     justify-content: center;
     align-items: center;
@@ -64,13 +71,13 @@ a {
     font-size: 1.2vw;
     font-weight: 700;
     line-height: 1;
-    margin-bottom: 4vh;
+    margin-bottom: 2vh;
 }
 
 .learning a {
     display: flex;
     width: 14.6875vw;
-    height: 2.9688vw;
+    height: 2.5688vw;
     padding: 0.5208vw;
     justify-content: center;
     align-items: center;
@@ -84,7 +91,7 @@ a {
     font-family: Inter, sans-serif;
     font-size: 1.2vw;
     font-weight: 700;
-    margin-top: 18.8056vw;
+    margin-top: 23.8056vw;
 }
 
 /* 미디어 쿼리: 화면이 작은 경우 레이아웃 조정 */

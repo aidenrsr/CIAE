@@ -12,39 +12,47 @@
     border-radius: 130.2915vw;
     background: #FFF;
     position: absolute; /* 위치를 설정할 수 있도록 */
-    top: -16rem; /* 창 높이의 50%에서 위쪽으로 248px 이동 */
-    right: -42rem; /* 창 너비의 50%에서 왼쪽으로 960px 이동 */
+    left: 45.3438vw; 
+    top: -55.8148vh;
 }
 
 input {
     display: flex;
-    width: 483px;
-    height: 66px;
-    padding: 12.759px;
+    width: 22.5417vw;
+    height: 1.8888vh;
+    padding: 0.8860vw;
     align-items: center;
-    gap: 12.759px;
-    border-radius: 1275.862px;
+    gap: 0.8860vw;
+    border-radius: 88.6015vw;
     background: #EBEBEB;
     border: 0cm;
 }
 
 button {
     display: flex;
-    width: 16.7708vw;
-    height: 2.2917vw;
-    padding: 0.3472vw;
+    width: 24.5vw;
+    height: 5.2167vh;
+    padding: 1.1772vw;
     justify-content: center;
     align-items: center;
     gap: 0.3472vw;
     border-radius: var(--Corner-Full, 34.7222vw);
     background: #52BDFF;
+    border: 0cm;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 30.078px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%; /* 35.078px */
 }
 
 input::placeholder {
     color: #A9A9A9;
     text-align: left;
     font-family: Inter;
-    font-size: 35.078px;
+    font-size: 30.078px;
     font-style: normal;
     font-weight: 400;
     line-height: 100%; /* 35.078px */
@@ -59,9 +67,11 @@ input::placeholder {
 }
 
 .Logi {
-    position: relative;
-    top:24.25rem;
-    bottom: 33.75rem;
-    left: 13.13rem;
-    right: 76.69rem;
+    position: absolute;
+    top: 38.8889vh;
+    right: 12.5000vw;
+}
+
+.membership-button {
+    margin-top: 20px;
 }

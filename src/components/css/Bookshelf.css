@@ -48,7 +48,6 @@ p {
     
 }
 
-
 .bookStorage2 {
     position: absolute;
     top: 31.0938vw;
@@ -56,27 +55,28 @@ p {
 }
 
 .booklist {
-    list-style: none; /* 기본 목록 스타일 제거 */
+    list-style: none;
     padding: 0;
+    display: inline-block; /* 추가 */
+    vertical-align: top; /* 추가 */
+}
+
+.booksImg, .yet {
+    width: 9.3229vw;
+    height: 12.1354vw;
+    flex-shrink: 0;
+    margin-left: 3.3979vw;
+    margin-top: -3.2292vw; /* margin-block을 margin-top으로 변경 */
+    vertical-align: top; /* 추가 */
 }
 
 .booksImg {
-    width: 9.3229vw;
-    height: 12.1354vw;
-    flex-shrink: 0;
     box-shadow: 0.3125vw 0.3125vw 1.3021vw 0.1042vw rgba(0, 0, 0, 0.25);
     object-fit: none;
-    box-shadow: none;
-    margin-left: 3.6979vw;
-    margin-block: -3.2292vw;
 }
 
 .yet {
-    width: 9.3229vw;
-    height: 12.1354vw;
-    flex-shrink: 0;
     background: #C8C8C8;
     box-shadow: 0.3125vw 0.3125vw 0.7813vw 0.0000vw rgba(0, 0, 0, 0.25);
-    margin-left: 3.6979vw;
-    margin-block: -3.2292vw;
+    display: inline-block; /* 추가 */
 }

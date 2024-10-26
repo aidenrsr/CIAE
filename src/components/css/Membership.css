@@ -1,0 +1,61 @@
+.San {
+    width: 124.5833vw;
+    height: 58.5185vh;
+    flex-shrink: 0;
+    border-radius: 50% / 50%; /* 수평 방향과 수직 방향 각각 50% */
+    background: #51EF68;
+    position: relative;
+    top: 64.8148vh;
+    left: -10.9375vw;
+    z-index: 0;
+}
+
+.Namu1 {
+    width: 216px;
+    height: 216px;
+    flex-shrink: 0;
+    fill: #33BE48;
+    position: absolute;
+    top: 31.0417vh;
+    left: 34.8958vh;
+    z-index: 0;
+}
+
+.Namu2 {
+    width: 296px;
+    height: 296px;
+    flex-shrink: 0;
+    border-radius: 296px;
+    background: #33BE48;
+}
+
+.Namu3 {
+    width: 265px;
+    height: 265px;
+    flex-shrink: 0;
+    border-radius: 265px;
+    background: #33BE48;
+}
+
+.Namu4 {
+    width: 520px;
+    height: 520px;
+    flex-shrink: 0;
+    border-radius: 520px;
+    background: #33BE48;
+}
+
+.Namu5 {
+    width: 347px;
+    height: 347px;
+    flex-shrink: 0;
+    border-radius: 347px;
+    background: #33BE48;
+}
+
+.Pul {
+    width: 1250px;
+    height: 266px;
+    flex-shrink: 0;
+    background: #33BE48;    
+}
