@@ -26,3 +26,49 @@
     height: 100%;
     object-fit: cover;
 }
+
+.gameOver {
+    width: 61.0417vw;
+    height: 70.5556vh;
+    flex-shrink: 0;
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    right: 7vw;
+    bottom: 14vh;
+    z-index: 1;
+    transition: background 1s ease, opacity 1s ease;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.OverMent {
+    position: absolute;
+    right: 27.5vw;
+    top: 25vh;
+    text-align: center;
+}
+
+.Restart {
+    position: absolute;
+    right: 19vw;
+    top: 36vh;
+}
+
+.ScoreMent {
+    position: absolute;
+    right: 29.7vw;
+    top: 29.5vh;
+    text-align: center;
+}
+
+.Score {
+    position: absolute;
+    right: 2vw;
+    top: 0vh;
+    text-align: center;
+    z-index: 1;
+    font-size: 2vw;
+    color: #ffffff;
+    font-family:Arial, Helvetica, sans-serif;
+}

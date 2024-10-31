@@ -64,3 +64,84 @@
         top: 2vh;
     }
 }
+
+.Introduce {
+    width: 24.2708vw;
+    height: 32.5208vw;
+    flex-shrink: 0;
+    flex-shrink: 0;
+    border-radius: var(--Corner-Extra-large, 1.4583vw);
+    background: #ffffff;
+    box-shadow: 0.7813vw 0.7813vw 0.7813vw 0.4813vw rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 21.3333vh;
+    left: 3.8vw
+}
+
+.IntroduceImage {
+    width: 80%;
+    margin-left: 2.5vw;
+    margin-top: 3vh;
+    border-radius: var(--Corner-Extra-large, 1.4583vw);
+}
+
+.IntroduceText {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+    margin-top: 2vh;
+}
+
+.Project {
+    width: 31.0104vw;
+    height: 6.6667vw;
+    flex-shrink: 0;
+    border-radius: var(--Corner-Extra-large, 1.4583vw);
+    background: #ffffff;
+    box-shadow: 0.7813vw 0.7813vw 0.7813vw 0.4813vw rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 21.3333vh;
+    right: 4vw;
+}
+
+.ProjectImage {
+    width: 17%;
+    margin-left: 1vw;
+    margin-top: 1.2vh;
+    border-radius: var(--Corner-Extra-large, 1.4583vw);
+}
+
+.ProjectText {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    top: -0.2vh;
+    left: 2.7vw;
+    right: 1vw;
+}
+
+.Project2 {
+    width: 31.0104vw;
+    height: 6.6667vw;
+    flex-shrink: 0;
+    border-radius: var(--Corner-Extra-large, 1.4583vw);
+    background: #ffffff;
+    box-shadow: 0.7813vw 0.7813vw 0.7813vw 0.4813vw rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 35.3333vh;
+    right: 4vw;
+}
+
+.ProjectImage2 {
+    width: 17%;
+    margin-left: 1vw;
+    margin-top: 1.2vh;
+    border-radius: var(--Corner-Extra-large, 1.4583vw);
+}
+
+.ProjectText2 {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    top: -0.2vh;
+    left: 2.7vw;
+    right: 1vw;
+}

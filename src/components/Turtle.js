@@ -28,7 +28,7 @@ export default function Turtle() {
                     <WhereLink className='Forest_LinkContainer' to='/Forest' src='/Forest_Link.png' alt='Forest' text='숲속 마을' />
                     <WhereLink className='Sky_LinkContainer' to='/Sky' src='/Sky_Link.png' alt='Cloud' text='구름 마을' />
                     <WhereLink className='Space_LinkContainer' to='/Space' src='/Space_Link.png' alt='Space' text='우주 마을' />
-                    
+                    <img src='/Locked.png' className='Locked' alt='Locked' />
                 </div>  
             </div>
         </div>
