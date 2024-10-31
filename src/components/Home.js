@@ -9,9 +9,7 @@ function HomeComponent(props) {
                 <img src={props.src} className={props.classNameOfImage} alt={props.alt}></img>
                 <p className={props.classNameOfText}>{props.text}</p>
             </section>
-        </Link>
-
-        
+        </Link>       
     )
 }
 

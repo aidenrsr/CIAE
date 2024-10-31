@@ -1,15 +1,4 @@
-.menu {
-    width: 64.8958vw;
-    height: 49.5313vw;
-    flex-shrink: 0;
-    border-radius: var(--Corner-Extra-large, 1.4583vw);
-    background: #FFF;
-    box-shadow: 0.7813vw 0.7813vw 0.7813vw 0.0000vw rgba(0, 0, 0, 0.25);
-    position: absolute;
-    right: 9vh;
-    top: 5vh;
-    display: flex;
-}
+
 
 .DeepSea_Background {
     width: 61.0417vw;
