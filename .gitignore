@@ -39,3 +39,6 @@ build/
 *.egg-info/
 # Ignore .env files
 .env
+
+# Ignore node_modules
+node_modules/
