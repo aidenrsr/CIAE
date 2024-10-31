@@ -1,5 +1,14 @@
 .Home_Button {
     z-index: 4;
+    position: absolute;
+    right: 25vw;
+    top: 65vh;
+}
+
+.MessageForUser {
+    position: absolute;
+    right: 25vw;
+    top: 50vh;
 }
 
 .Learning_menu {
@@ -87,7 +96,7 @@
 
 .Comprehension_problem {
     display: flex;
-    width: 47.3438vw;
+    width: 50.3438vw;
     height: 7.5000vh;
     color: #000;
     text-align: center;
@@ -98,8 +107,8 @@
     line-height: 100%; /* 30px */
     position: absolute;
     top: 49.0185vh;
-    left: 16.3021vw;
-    margin-bottom: 2.1111vh;
+    left: 14.8021vw;
+    margin-bottom: 3.1111vh;
 }
 
 .Comprehension_Button_A, .Comprehension_Button_B, .Comprehension_Button_C {
@@ -139,23 +148,126 @@
     object-fit: contain;
 }
 
-.AI_Chat_Bot_Image {
+.AI_Chat_User_Image {
     width: 6%;
     height: 6%;
     flex-shrink: 0;
-
+    position: absolute;
+    bottom: 45.5741vh;
+    right: 15.5208vw;
 }
 
-.AI_Chat_question {
-    text-align: center;
+.AI_ChatBot_Image {
+    width: 6%;
+    height: 6%;
+    flex-shrink: 0;
     position: absolute;
-    top: 49.6296vh;
-    left: 14.7917vw;
+    top: 45.5741vh;
+    left: 15.5208vw;
 }
 
-.AI_Chat_Bot_Text {
-    text-align: center;
+.AI_Question {
+    width: 40vw;
     position: absolute;
-    top: 49.6296vh;
-    left: 14.7917vw;
+    top: 44.8741vh;
+    left: 21.5208vw;
+}
+
+.AI {
+    width: 40vw;
+    position: absolute;
+    top: 52.8741vh;
+    left: 17.5208vw;
+}
+
+.User {
+    position: absolute;
+    top: 73.9741vh;
+    right: 15.9208vw;
+}
+
+.StopRecording {
+    width: 9%;
+    position: absolute;
+    bottom: 42.5741vh;
+    right: 22.5208vw;
+}
+
+.AnswerStart {
+    width: 9%;
+    position: absolute;
+    bottom: 42.9741vh;
+    right: 22.5208vw;
+}
+
+.Continue {
+    width: 9%;
+    position: absolute;
+    bottom: 42.9741vh;
+    right: 22.5208vw;
+}
+
+.Done {
+    width: 9%;
+    position: absolute;
+    bottom: 42.9741vh;
+    right: 30.5208vw;
+}
+
+.Stop {
+    width: 9%;
+    position: absolute;
+    bottom: 42.9741vh;
+    right: 22.5208vw;
+}
+
+.CorrectMessage {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 50vh; /* 화면 중앙에 위치 */
+    left: 50%; /* 화면 중앙에 위치 */
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    background-color: rgba(0, 255, 0, 0.8); /* 반투명 초록색 배경 */
+    color: white; /* 흰색 텍스트 */
+    padding: 20px; /* 여백 추가 */
+    border-radius: 10px; /* 모서리 둥글게 */
+    font-size: 24px; /* 글자 크기 */
+    font-weight: bold; /* 글자 두껍게 */
+    z-index: 5; /* 다른 요소 위에 표시 */
+    transition: opacity 0.5s ease; /* 부드러운 사라짐 효과 */
+}
+
+.Result {
+    position: absolute;
+    top: 50vh; /* 화면 중앙에 위치 */
+    left: 50%; /* 화면 중앙에 위치 */
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    font-size: 100px; /* 큰 글자 크기 */
+    z-index: 5; /* 다른 요소 위에 표시 */
+    transition: opacity 0.5s ease; /* 부드러운 사라짐 효과 */
+}
+
+.Result.correct {
+    color: red; /* 정답일 때 빨간색 */
+}
+
+.Result.incorrect {
+    color: black; /* 오답일 때 검은색 */
+}
+
+.SummaryBubble {
+    width: 40vw;
+    height: 5vh;
+    position: absolute;
+    top: 25vh; /* 문제 위에 위치 */
+    left: 50%; /* 중앙 정렬 */
+    transform: translateX(-50%); /* 중앙 정렬 */
+    background-color: rgba(255, 255, 255, 0.9); /* 반투명 흰색 배경 */
+    border: 1px solid #000; /* 검은색 테두리 */
+    border-radius: 100px; /* 모서리 둥글게 */
+    padding: 15px; /* 여백 추가 */
+    font-size: 18px; /* 글자 크기 */
+    z-index: 6; /* 다른 요소 위에 표시 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
 }

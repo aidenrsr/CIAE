@@ -14,7 +14,7 @@
     object-fit: cover;
 }
 
-.UnderTheSea_LinkContainer, .Space_LinkContainer, .Sky_LinkContainer, .Forest_LinkContainer {
+.UnderTheSea_LinkContainer, .Space_LinkContainer, .Sky_LinkContainer, .Forest_LinkContainer, .Locked{
     width: 17.1354vw;
     height: 25.3704vh;
     border-radius: 56px;
@@ -41,6 +41,11 @@
     left: 11.8750vw;
 }
 
+.Locked {
+    position: absolute;
+    top: 40.3704vh;
+    right: 11.8750vw;
+}
 .Sky_LinkContainer {
     position: absolute;
     top: 7.4074vh;

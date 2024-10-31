@@ -53,7 +53,7 @@ a {
     left: 0.0694vw;
 }
 
-.home a, .bookshelf a, .turtle a {
+.home a, .bookshelf a, .turtle a, .village a{
     display: flex;
     width: 14.6875vw;
     height: 2.5688vw;
@@ -91,7 +91,7 @@ a {
     font-family: Inter, sans-serif;
     font-size: 1.2vw;
     font-weight: 700;
-    margin-top: 23.8056vw;
+    margin-top: 19.0056vw;
 }
 
 /* 미디어 쿼리: 화면이 작은 경우 레이아웃 조정 */
@@ -109,3 +109,5 @@ a {
         font-size: 2.5vw;
     }
 }
+
+/*Common CSS*/
