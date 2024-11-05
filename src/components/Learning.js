@@ -2,6 +2,7 @@ import './css/Learning.css';
 import React, { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import axios from 'axios';
 
 async function callOpenAI(messages, setAiResponse) {
     const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
@@ -45,7 +46,24 @@ function Button({ name, src, alt, onClick }) {
 function Reading({ onAITrigger }) {
     const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호 상태
     const [numPages, setNumPages] = useState(null); // 총 페이지 수 상태
-
+    const [chap, setPage] = useState(null);
+    useEffect(() => {
+        axios
+        .get("http://127.0.0.1:5000/api/chapNum")
+        .then((response) => {
+            setPage(response.data);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }, []);
+    const [book_id, setBookID] = useState(null);
+    useEffect(() => {
+        axios
+        .get("http://127.0.0.1:5000/api/bookID")
+        .then((response) => {
+            setBookID(response.data);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }, []);
     // PDF 문서 로드 성공 시 총 페이지 수를 설정하는 함수
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
@@ -61,8 +79,8 @@ function Reading({ onAITrigger }) {
         if (pageNumber + 1 < numPages) {
             setPageNumber(pageNumber + 2);
         }
-        if (pageNumber >= 9) {
-            onAITrigger(); // 9페이지 이상일 경우 AI 트리거
+        if (pageNumber >= chap) {
+            onAITrigger(); // 챕터 이상일 경우 AI 트리거
         }
     };
 
@@ -75,12 +93,12 @@ function Reading({ onAITrigger }) {
                 onClick={goToPrevPage} // 왼쪽 화살표 버튼으로 이전 페이지로 이동
             />
             <div className='Learning_Book_Left'>
-                <Document file='/Hamlet.pdf' onLoadSuccess={onDocumentLoadSuccess} className="pdf-document">
+                <Document file={book_id} onLoadSuccess={onDocumentLoadSuccess} className="pdf-document">
                     <Page pageNumber={pageNumber} renderTextLayer={false} className="pdf-page"/> {/* 왼쪽 페이지 표시 */}
                 </Document>
             </div>
             <div className='Learning_Book_Right'>
-                <Document file='/Hamlet.pdf' onLoadSuccess={onDocumentLoadSuccess} className="pdf-document">
+                <Document file={book_id} onLoadSuccess={onDocumentLoadSuccess} className="pdf-document">
                     <Page pageNumber={pageNumber + 1} renderTextLayer={false} className="pdf-page"/> {/* 오른쪽 페이지 표시 */}
                 </Document>
             </div>
@@ -95,16 +113,26 @@ function Reading({ onAITrigger }) {
 }
 
 function Ai() {
+    const [InitQuestion, setInitQuestion] = useState(null);
+    useEffect(() => {
+        axios
+        .get("http://127.0.0.1:5000/api/InitQuestion")
+        .then((response) => {
+            setInitQuestion(response.data);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }, []);
+
     const [messages, setMessages] = useState([
         { "role": "system", "content": "You are a turtle character, 10 years old, specializing in psychological and bibliotherapy. \
             You attend elementary school. You have a lively and cheerful personality, and you’re skilled at keeping conversations going.\
              You empathize well with others' words and speak kindly, with a cute tone typical of teenagers. Use informal language instead of honorifics, \
              and add emojis seldomly. Answer in Korean. 반말 쓰라고." },
-        { "role": "assistant", "content": "오늘 주인공이 겪은 거랑 비슷한 일 너도 겪어본 적 있어? " } // 초기 질문
+        { "role": "assistant", "content": InitQuestion } // 초기 질문
     ]);
     const [transcript, setTranscript] = useState('');
     const [isListening, setIsListening] = useState(false);
-    const [aiResponse, setAiResponse] = useState("오늘 주인공이 겪은 거랑 비슷한 일 너도 겪어본 적 있어?" );
+    const [aiResponse, setAiResponse] = useState(InitQuestion);
     const [showContinue, setShowContinue] = useState(false);
     const [isDone, setIsDone] = useState(false);
     const [showHomeButton, setShowHomeButton] = useState(false);

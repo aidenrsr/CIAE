@@ -23,37 +23,40 @@ p {
     width: 56vw;
     height: 12.0833vw;
     flex-shrink: 0;
-    border-radius: var(--Corner-Full, 52.0833vw);
+    border-radius: 52.0833vw;
     background: #EBEBEB;
     left: 3.0417vw;
+    display: flex; /* flexbox 사용 */
+    flex-wrap: wrap; /* 자식 요소가 자동으로 줄바꿈 */
+    padding: 1rem; /* 여백 추가 */
+    gap: 1rem; /* 요소 간의 간격 */
 }
 
 .bookStorage1 {
     position: absolute;
-    top: 14.6875vw;
+    top: 26.111vh;
     z-index: 10vw;
-    
 }
 
 .bookStorage2 {
     position: absolute;
-    top: 31.0938vw;
+    top: 55.2777vh;
     z-index: 10vw;
 }
 
 .booklist {
     list-style: none;
     padding: 0;
-    display: inline-block; /* 추가 */
-    vertical-align: top; /* 추가 */
+    display: inline-block;
+    vertical-align: top;
 }
 
 .booksImg, .yet {
     width: 9.3229vw;
     height: 12.1354vw;
     flex-shrink: 0;
-    margin-left: 3.3979vw;
-    margin-top: -3.2292vw; /* margin-block을 margin-top으로 변경 */
+    margin-left: 3.1vw;
+    margin-top: -9.740vh; /* margin-block을 margin-top으로 변경 */
     vertical-align: top; /* 추가 */
 }
 

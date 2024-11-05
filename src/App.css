@@ -8,7 +8,7 @@ body, html {
     font-size: 1vw; /* 뷰포트 너비에 따라 전체 텍스트 크기가 조정됨 */
 }
 
-.Main {
+.MainBackground {
     width: 100vw;
     height: 100vh;
 }
@@ -40,7 +40,7 @@ a {
 }
 
 .navAll {
-    margin-top: 19.9074vh;
+    margin-top: 13.89vh;
     display: flex;
     flex-direction: column; /* 리스트 아이템들을 세로로 정렬 */
     align-items: center;    /* 리스트 아이템들이 nav 안에 중앙 정렬 */
@@ -76,7 +76,7 @@ a {
     font-family: Inter, sans-serif;
     font-size: 1.2vw;
     font-weight: 700;
-    margin-bottom: 2vh;;
+    margin-bottom: 2vh;
 }
 
 .learning a {
@@ -90,16 +90,14 @@ a {
     flex-shrink: 0;
     border-radius: var(--Corner-Full, 52.0833vw);
     background: #52BDFF;
-    box-shadow: 0.0000vw 0.2083vw 0.2083vw 0.0000vw rgba(0, 0, 0, 0.25);
+    box-shadow: 0.0000vw 0.2083vw 0.2083vw 0.00vw rgba(0, 0, 0, 0.25);
     color: #000;
     text-align: center;
     font-family: Inter, sans-serif;
     font-size: 1.2vw;
     font-weight: 700;
-    margin-top: 8.0056vh;
+    margin-top: 28.0056vh;
 }
-
-/* 미디어 쿼리: 화면이 작은 경우 레이아웃 조정 */
 
 /*Common CSS*/
 

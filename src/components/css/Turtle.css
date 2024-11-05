@@ -14,10 +14,17 @@
     object-fit: cover;
 }
 
-.UnderTheSea_LinkContainer, .Space_LinkContainer, .Sky_LinkContainer, .Forest_LinkContainer, .Locked{
+.UnderTheSea_LinkContainer, 
+.Space_LinkContainer, 
+.Sky_LinkContainer, 
+.Forest_LinkContainer, 
+.Locked1,
+.Locked2,
+.Locked3,
+.Locked4 {
     width: 17.1354vw;
     height: 25.3704vh;
-    border-radius: 56px;
+    border-radius: 2.1rem;
     background: #FFF;
     display: flex;
     flex-direction: column;
@@ -41,11 +48,6 @@
     left: 11.8750vw;
 }
 
-.Locked {
-    position: absolute;
-    top: 40.3704vh;
-    right: 11.8750vw;
-}
 .Sky_LinkContainer {
     position: absolute;
     top: 7.4074vh;
@@ -71,10 +73,35 @@
     color: #000;
     text-align: center;
     font-family: Inter;
-    font-size: 20.614px;
+    font-size: 1.3rem;
     font-style: normal;
     font-weight: 700;
     line-height: 100%; /* 20.614px */
     margin-top: 2.4074vh;
     margin-left: 0%;
+}
+
+/* 위치에 맞게 잠금 이미지 배치 */
+.Locked1 {
+    position: absolute;
+    top: 40.3704vh;
+    right: 11.8750vw;
+}
+
+.Locked2 {
+    position: absolute;
+    top: 7.4074vh;
+    left: 21.9271vw;
+}
+
+.Locked3 {
+    position: absolute;
+    top: 7.4074vh;
+    right: 1.7708vw;
+}
+
+.Locked4 {
+    position: absolute;
+    top: 40.3704vh;
+    left: 11.8750vw;
 }

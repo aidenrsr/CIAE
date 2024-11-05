@@ -22,13 +22,14 @@
     flex-shrink: 0;
     background: rgba(0,0,0,0.5);
     position: absolute;
-    right: 7vw;
-    bottom: 14vh;
+    right: 7.1vw;
+    bottom: 12.5vh;
     z-index: 1;
     transition: background 1s ease, opacity 1s ease;
     display: flex;
     align-items: center;
     color: white;
+    
 }
 
 .OverMent {
@@ -38,18 +39,28 @@
     text-align: center;
 }
 
+.ScoreMent {
+    position: absolute;
+    right: 29.3vw;
+    top: 30vh;
+    text-align: center;
+}
+
+.HighestScore {
+    position: absolute;
+    right: 28.7vw;
+    top: 33.5vh;
+    text-align: center;
+}
+
+
 .Restart {
     position: absolute;
     right: 19vw;
-    top: 36vh;
+    top: 40vh;
 }
 
-.ScoreMent {
-    position: absolute;
-    right: 29.7vw;
-    top: 29.5vh;
-    text-align: center;
-}
+
 
 .Score {
     position: absolute;

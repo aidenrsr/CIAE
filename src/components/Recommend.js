@@ -12,6 +12,12 @@ function Button({ name, src, alt, onClick }) {
 function Reading() {
     return (
         <>  
+            <div className='RecommendBar'>
+                <p className='NewBookMent'>다른 책을 읽고 싶다면?</p>
+                <div className='RecommendBook1'/>
+                <div className='RecommendBook2'/>
+                <div className='RecommendBook3'/>
+            </div>
             <div className='MainBook'/>
             <p className='Irecommend'>읽을 만한 책을 추천해줄게요!</p>
             <Button

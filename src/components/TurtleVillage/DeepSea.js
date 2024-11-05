@@ -1,6 +1,7 @@
 import './css/DeepSea.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function DeepSea() {
     const randomPosition = (maxX, maxY) => ({
@@ -21,7 +22,6 @@ export default function DeepSea() {
     const [sharkPosition, setSharkPosition] = useState(randomPosition(300, 300));
     const [sharkDirection, setSharkDirection] = useState(randomDirection());
     const [score, setScore] = useState(0);
-    const [life, setLife] = useState(3);
     const [gameOver, setGameOver] = useState(false);
     const [gameOverOpacity, setGameOverOpacity] = useState(0);
     const backgroundRef = useRef(null);
@@ -208,13 +208,52 @@ export default function DeepSea() {
         setGameOver(false);
         setGameOverOpacity(0);
     };
+    const [HighestScore, setHighestScore] = useState(0);
+    useEffect(() => {
+        axios
+        .get("http://127.0.0.1:5000/api/HighesetScore")
+        .then((response) => {
+            setHighestScore(response.data);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }, []);
 
+    if (score > HighestScore) {
+        axios
+            .put("http://127.0.0.1:5000/api/HighestScore", { score: score })
+            .then((response) => {
+                console.log("Score successfully updated:", response.data);
+            })
+            .catch((error) => {
+                console.error("Error updating the score:", error);
+            });
+    }
+    const [Life, setLife] = useState(0);
+    useEffect(() => {
+        axios
+        .get("http://127.0.0.1:5000/api/Life")
+        .then((response) => {
+            setLife(response.data);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }, []);
+    if (gameOver) {
+        axios
+            .put("http://127.0.0.1:5000/api/Life", { Life: Life })
+            .then((response) => {
+                console.log("Score successfully updated:", response.data);
+            })
+            .catch((error) => {
+                console.error("Error updating the score:", error);
+            });
+    } 
     return (
         <div>
             {gameOver && (
                 <div className='gameOver' style={{ opacity: gameOverOpacity, transition: 'opacity 1s' }}>
                     <h1 className='OverMent'>게임 오버!</h1>
                     <h3 className='ScoreMent'>점수: {score}</h3>
+                    <h3 className='HighestScore'>최고점수: {HighestScore}</h3>
                     <button className='Restart' onClick={restartGame}>다시 시작</button>
                 </div>
             )}
