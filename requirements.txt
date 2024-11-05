@@ -1,0 +1,9 @@
+Flask
+flake8
+flask-testing
+psycopg2-binary
+postgres
+werkzeug
+authlib
+python-dotenv
+click

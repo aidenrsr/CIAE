@@ -1,7 +1,9 @@
 import psycopg2
 from flask import Flask, current_app, g, jsonify, g
 from flask_cors import CORS
+from psycopg2.extras import RealDictCursor
 import click
+import os
 
 #DC edited
 app = Flask(__name__)
@@ -9,7 +11,14 @@ CORS(app)  # CORS 허용
 
 def get_db():
     if "db" not in g:
-        g.db = psycopg2.connect("dbname=ciae user=sungrohryu password=1234")
+        g.db = psycopg2.connect(
+            host=os.environ.get('POSTGRES_HOST', 'db'),
+            port=os.environ.get('POSTGRES_PORT', 5432),
+            dbname=os.environ.get('POSTGRES_DB', 'ciae'),
+            user=os.environ.get('POSTGRES_USER', 'sungrohryu'),
+            password=os.environ.get('POSTGRES_PASSWORD', ''),
+            cursor_factory=RealDictCursor
+        )
     return g.db
 
 
@@ -101,4 +110,3 @@ def get_scores():
 
 if __name__ == "__main__":
     app.run(debug=True)
-

@@ -1,11 +1,14 @@
 import os
 
-from flask import Flask
+try:
+    from flask import Flask
+except ImportError:
+    print("Error: Flask module not found. Please install Flask using 'pip install flask'")
+    raise
 
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-    app.config["KEY"] = "minyong926"
 
     from .views import views
     from . import auth
@@ -14,7 +17,7 @@ def create_app(test_config=None):
     db.init_app(app)
 
     app.register_blueprint(views, url_prefix="/")
-    app.register_blueprint(auth, url_prefix="/")
+    app.register_blueprint(auth.bp)
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile("config.py", silent=True)
