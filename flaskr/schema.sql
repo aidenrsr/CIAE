@@ -14,6 +14,7 @@ CREATE TABLE users (
   oauth_user_id TEXT UNIQUE,  -- OAuth provider's unique user ID
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  -- Please add 
 );
 
 CREATE TABLE badges (

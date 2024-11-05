@@ -38,7 +38,7 @@ export default function Home() {
                         classNameOfImage='ProjectImage'
                         src='/Project.jpeg'
                         classNameOfText='ProjectText'
-                        text='우리의 프로그램 설명: 우리의 프로그램을 간결하게 표현해보자.어떨까 민용이형은 어디에 있을까.'
+                        text='우리의 프로그램 설명'
                     />
                     <HomeComponent
                         to='Project2'
@@ -46,7 +46,7 @@ export default function Home() {
                         classNameOfImage='ProjectImage2'
                         src='/Project.jpeg'
                         classNameOfText='ProjectText2'
-                        text='우리의 프로그램 설명: 우리의 프로그램을 간결하게 표현해보자.어떨까 민용이형은 어디에 있을까.'
+                        text='우리의 프로그램 설명'
                     />
                 </article>
             </div>

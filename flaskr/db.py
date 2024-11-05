@@ -1,7 +1,11 @@
 import psycopg2
-from flask import current_app, g
+from flask import Flask, current_app, g, jsonify, g
+from flask_cors import CORS
 import click
 
+#DC edited
+app = Flask(__name__)
+CORS(app)  # CORS 허용
 
 def get_db():
     if "db" not in g:
@@ -32,3 +36,17 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+
+#DC edited
+@app.route("/api/books", methods=["GET"])
+def get_books():
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT book_name, book_page_num FROM book")
+    books = cursor.fetchall()
+    return jsonify(books)
+
+if __name__ == "__main__":
+    app.run(debug=True)
+

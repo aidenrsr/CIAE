@@ -13,7 +13,6 @@ body, html {
     height: 100vh;
 }
 
-
 li {
     display: inline-block;
     align-self: center;
@@ -30,6 +29,8 @@ nav {
     left: 5vw;
     top: 5vh;
     display: flex;
+    flex-direction: column; /* 세로 방향 정렬 */
+    overflow: hidden;       /* nav 안에 요소가 넘치지 않도록 설정 */
     z-index: 1;
 }
 
@@ -39,9 +40,14 @@ a {
 }
 
 .navAll {
-    margin-top: 9.4167vw;
+    margin-top: 19.9074vh;
+    display: flex;
+    flex-direction: column; /* 리스트 아이템들을 세로로 정렬 */
+    align-items: center;    /* 리스트 아이템들이 nav 안에 중앙 정렬 */
+    gap: 2vh;               /* 리스트 아이템 간의 간격 */
+    padding: 0;             /* 기본 패딩 제거 */
+    overflow-y: auto;       /* 세로 스크롤 필요 시 생성 */
 }
-
 .logo {
     width: 10.0000vw;
     height: 10.0000vw;
@@ -49,8 +55,8 @@ a {
     background:white 20% / cover no-repeat;
     background-color: transparent;
     position: absolute;
-    top: -0.9722vw;
-    left: 0.0694vw;
+    top: -2vh;
+    left: 0.1vw;
 }
 
 .home a, .bookshelf a, .turtle a, .village a{
@@ -65,13 +71,12 @@ a {
     border-radius: var(--Corner-Full, 52.0833vw);
     background: #FFF;
     box-shadow: 0.0000vw 0.2083vw 0.2083vw 0.0000vw rgba(0, 0, 0, 0.25);
-    color: #606060;
+    color: #000;
     text-align: center;
     font-family: Inter, sans-serif;
     font-size: 1.2vw;
     font-weight: 700;
-    line-height: 1;
-    margin-bottom: 2vh;
+    margin-bottom: 2vh;;
 }
 
 .learning a {
@@ -91,7 +96,7 @@ a {
     font-family: Inter, sans-serif;
     font-size: 1.2vw;
     font-weight: 700;
-    margin-top: 19.0056vw;
+    margin-top: 8.0056vh;
 }
 
 /* 미디어 쿼리: 화면이 작은 경우 레이아웃 조정 */
