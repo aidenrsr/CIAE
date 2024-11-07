@@ -24,26 +24,22 @@ export default function DeepSea() {
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [gameOverOpacity, setGameOverOpacity] = useState(0);
+    const [life, setLife] = useState(0); // 목숨 초기값
     const backgroundRef = useRef(null);
-    
-    // 속도 설정
+
     const turtleSpeed = 20;
     const fishSpeed = 19;
-    const sharkSpeed = 19;
+    const [sharkSpeed, setSharkSpeed] = useState(40);
 
-    // 방향 벡터의 크기를 일정하게 유지하는 함수
-    const normalizeDirection = (direction) => {
-        const length = Math.sqrt(direction.x ** 2 + direction.y ** 2);
-        return {
-            x: (direction.x / length) || 1,
-            y: (direction.y / length) || 1,
-        };
-    };
-
-    const adjustDirectionSlightly = (direction) => normalizeDirection({
-        x: direction.x + (Math.random() * 0.2 - 0.1),
-        y: direction.y + (Math.random() * 0.2 - 0.1),
-    });
+    useEffect(() => {
+        // Life 값을 API에서 가져오기
+        axios
+            .get("http://127.0.0.1:5000/api/Life")
+            .then((response) => {
+                setLife(response.data); // API로부터 목숨 값 설정
+            })
+            .catch((error) => console.error("Error fetching Life data:", error));
+    }, []);
 
     useEffect(() => {
         const turtleMoveInterval = setInterval(() => {
@@ -78,7 +74,14 @@ export default function DeepSea() {
 
     useEffect(() => {
         const moveEntity = (position, direction, speed, maxWidth, maxHeight) => {
-            const adjustedDirection = adjustDirectionSlightly(direction);
+            const adjustedDirection = {
+                x: direction.x + (Math.random() * 0.2 - 0.1),
+                y: direction.y + (Math.random() * 0.2 - 0.1),
+            };
+            const length = Math.sqrt(adjustedDirection.x ** 2 + adjustedDirection.y ** 2) || 1;
+            adjustedDirection.x /= length;
+            adjustedDirection.y /= length;
+
             let newX = position.x + adjustedDirection.x * speed;
             let newY = position.y + adjustedDirection.y * speed;
 
@@ -116,7 +119,16 @@ export default function DeepSea() {
             clearInterval(fishMoveInterval);
             clearInterval(sharkMoveInterval);
         };
-    }, [fishDirection, sharkDirection, gameOver]);
+    }, [fishDirection, sharkDirection, sharkSpeed, gameOver]);
+
+    useEffect(() => {
+        const speedIncreaseInterval = setInterval(() => {
+            if (gameOver) return;
+            setSharkSpeed((prevSpeed) => prevSpeed + 5);
+        }, 10000);
+
+        return () => clearInterval(speedIncreaseInterval);
+    }, [gameOver]);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -147,6 +159,8 @@ export default function DeepSea() {
     }, [gameOver]);
 
     useEffect(() => {
+        if (gameOver) return; // 게임 오버 상태일 때 충돌 감지 로직 중단
+
         const backgroundRect = backgroundRef.current.getBoundingClientRect();
 
         const turtleRect = {
@@ -189,9 +203,25 @@ export default function DeepSea() {
             turtleRect.top < sharkRect.bottom &&
             turtleRect.bottom > sharkRect.top
         ) {
-            setGameOver(true);
+            setLife((prevLife) => {
+                if (prevLife <= 0) return prevLife; // 목숨이 0 이하로 내려가지 않게 설정
+                const newLife = prevLife - 1;
+                if (newLife <= 0) setGameOver(true);
+
+                // 목숨이 감소할 때 API에 업데이트
+                axios
+                    .put("http://127.0.0.1:5000/api/Life", { Life: newLife })
+                    .then((response) => {
+                        console.log("Life successfully updated:", response.data);
+                    })
+                    .catch((error) => {
+                        console.error("Error updating Life data:", error);
+                    });
+
+                return newLife;
+            });
         }
-    }, [turtlePosition, fishPosition, sharkPosition, gameOver]);
+    }, [turtlePosition, fishPosition, sharkPosition, life, gameOver]); // gameOver 상태 추가
 
     useEffect(() => {
         if (gameOver) {
@@ -200,22 +230,26 @@ export default function DeepSea() {
     }, [gameOver]);
 
     const restartGame = () => {
+        if (life <= 0) return; // 목숨이 0 이하일 때 게임을 재시작하지 않음
+
         const backgroundRect = backgroundRef.current.getBoundingClientRect();
         setTurtlePosition(randomPosition(backgroundRect.width - 50, backgroundRect.height - 50));
         setFishPosition(randomPosition(backgroundRect.width - 30, backgroundRect.height - 30));
         setSharkPosition(randomPosition(backgroundRect.width - 30, backgroundRect.height - 30));
+        setSharkSpeed(25);
         setScore(0);
         setGameOver(false);
         setGameOverOpacity(0);
     };
+
     const [HighestScore, setHighestScore] = useState(0);
     useEffect(() => {
         axios
-        .get("http://127.0.0.1:5000/api/HighesetScore")
-        .then((response) => {
-            setHighestScore(response.data);
-        })
-        .catch((error) => console.error("Error fetching data:", error));
+            .get("http://127.0.0.1:5000/api/HighesetScore")
+            .then((response) => {
+                setHighestScore(response.data);
+            })
+            .catch((error) => console.error("Error fetching HighesetScore data:", error));
     }, []);
 
     if (score > HighestScore) {
@@ -225,28 +259,10 @@ export default function DeepSea() {
                 console.log("Score successfully updated:", response.data);
             })
             .catch((error) => {
-                console.error("Error updating the score:", error);
+                console.error("Error updating HighesetScore data:", error);
             });
     }
-    const [Life, setLife] = useState(0);
-    useEffect(() => {
-        axios
-        .get("http://127.0.0.1:5000/api/Life")
-        .then((response) => {
-            setLife(response.data);
-        })
-        .catch((error) => console.error("Error fetching data:", error));
-    }, []);
-    if (gameOver) {
-        axios
-            .put("http://127.0.0.1:5000/api/Life", { Life: Life })
-            .then((response) => {
-                console.log("Score successfully updated:", response.data);
-            })
-            .catch((error) => {
-                console.error("Error updating the score:", error);
-            });
-    } 
+
     return (
         <div>
             {gameOver && (
@@ -254,7 +270,11 @@ export default function DeepSea() {
                     <h1 className='OverMent'>게임 오버!</h1>
                     <h3 className='ScoreMent'>점수: {score}</h3>
                     <h3 className='HighestScore'>최고점수: {HighestScore}</h3>
-                    <button className='Restart' onClick={restartGame}>다시 시작</button>
+                    {life > 0 ? (
+                        <button className='Restart' onClick={restartGame}>다시 시작</button>
+                    ) : (
+                        <h1 className='NoLivesLeft'>남은 목숨이 없습니다!</h1>
+                    )}
                 </div>
             )}
             <div className='menu'>
@@ -262,19 +282,26 @@ export default function DeepSea() {
                 <Link to='/Login'><p className='logOut'>로그아웃</p></Link>
                 <div className='DeepSea_Background' ref={backgroundRef}>
                     <p className='Score'>점수: {score}</p>
+                    <p className='Life'>목숨: {life}</p>
                     <img src='/UnderTheSea.png' className='UnderTheSea_Image' alt='UnderTheSea'></img>
-                    <div 
+
+                    {/* 물고기 이미지 */}
+                    <img
+                        src='/mulkogi.png'
+                        alt='Fish'
                         style={{
                             position: 'absolute',
                             left: `${fishPosition.x}px`,
                             top: `${fishPosition.y}px`,
-                            width: '30px',
-                            height: '30px',
-                            backgroundColor: 'Yellow',
+                            width: '5vw',
+                            height: '5vh',
+                            transition: 'left 0.1s, top 0.1s',
                         }}
                     />
-                    <img 
-                        src='/Turtle_Right.png' 
+
+                    {/* 거북이 이미지 */}
+                    <img
+                        src='/Turtle_Right.png'
                         alt='Turtle'
                         style={{
                             position: 'absolute',
@@ -286,6 +313,7 @@ export default function DeepSea() {
                             height: '10%',
                         }}
                     />
+
                     {showBubble && (
                         <div style={{
                             position: 'absolute',
@@ -299,14 +327,18 @@ export default function DeepSea() {
                             '맛있어!'
                         </div>
                     )}
-                    <div
+
+                    {/* 상어 이미지 */}
+                    <img
+                        src='/jaws.png'
+                        alt='Shark'
                         style={{
                             position: 'absolute',
                             left: `${sharkPosition.x}px`,
                             top: `${sharkPosition.y}px`,
-                            width: '30px',
-                            height: '30px',
-                            backgroundColor: 'red',
+                            width: '7vw',
+                            height: '7vh',
+                            transition: 'left 0.1s, top 0.1s',
                         }}
                     />
                 </div>

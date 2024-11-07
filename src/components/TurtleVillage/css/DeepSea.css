@@ -72,3 +72,21 @@
     color: #ffffff;
     font-family:Arial, Helvetica, sans-serif;
 }
+
+.Life {
+    position: absolute;
+    right: 10vw;
+    top: 0vh;
+    text-align: center;
+    z-index: 1;
+    font-size: 2vw;
+    color: #ffffff;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.NoLivesLeft {
+    position: absolute;
+    right: 22.4vw;
+    top: 40vh;
+    color: red;
+}
