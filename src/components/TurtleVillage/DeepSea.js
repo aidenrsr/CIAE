@@ -24,27 +24,27 @@ export default function DeepSea() {
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [gameOverOpacity, setGameOverOpacity] = useState(0);
-    const [life, setLife] = useState(0); // 목숨 초기값
+    const [life, setLife] = useState(3); // 초기 목숨값
     const backgroundRef = useRef(null);
 
     const turtleSpeed = 20;
     const fishSpeed = 19;
     const [sharkSpeed, setSharkSpeed] = useState(40);
 
+    // 목숨 값 초기화 (DB에서 가져오기)
     useEffect(() => {
-        // Life 값을 API에서 가져오기
         axios
-            .get("http://127.0.0.1:5000/api/Life")
+            .get("http://127.0.0.1:5000/api/life")  // Flask API 엔드포인트
             .then((response) => {
-                setLife(response.data); // API로부터 목숨 값 설정
+                setLife(response.data.life); // DB에서 가져온 목숨 값을 설정
             })
-            .catch((error) => console.error("Error fetching Life data:", error));
+            .catch((error) => console.error("Error fetching life data:", error));
     }, []);
 
     useEffect(() => {
         const turtleMoveInterval = setInterval(() => {
             if (gameOver) return;
-
+            
             setTurtlePosition((pos) => {
                 const backgroundRect = backgroundRef.current.getBoundingClientRect();
                 let newPosition = { ...pos };
@@ -204,24 +204,27 @@ export default function DeepSea() {
             turtleRect.bottom > sharkRect.top
         ) {
             setLife((prevLife) => {
-                if (prevLife <= 0) return prevLife; // 목숨이 0 이하로 내려가지 않게 설정
                 const newLife = prevLife - 1;
-                if (newLife <= 0) setGameOver(true);
+                if (newLife <= 0) {
+                    setGameOver(true);
+                } else {
+                    setGameOver(true); // 게임 오버 화면 표시
+                }
 
-                // 목숨이 감소할 때 API에 업데이트
+                // 목숨 감소 시 DB에 업데이트
                 axios
-                    .put("http://127.0.0.1:5000/api/Life", { Life: newLife })
+                    .put("http://127.0.0.1:5000/api/life", { life: newLife })
                     .then((response) => {
                         console.log("Life successfully updated:", response.data);
                     })
                     .catch((error) => {
-                        console.error("Error updating Life data:", error);
+                        console.error("Error updating life data:", error);
                     });
-
+                
                 return newLife;
             });
         }
-    }, [turtlePosition, fishPosition, sharkPosition, life, gameOver]); // gameOver 상태 추가
+    }, [turtlePosition, fishPosition, sharkPosition, gameOver]);
 
     useEffect(() => {
         if (gameOver) {
