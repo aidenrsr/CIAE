@@ -131,14 +131,12 @@ export default function Village() {
             <p  className={`FreeBoard ${currentBoard === '자유게시판' ? 'selected' : ''}`}
                 onClick={() => handleBoardChange('자유게시판')}>자유게시판</p>
 
-            
             <p className={`InfoBoard ${currentBoard === '정보게시판' ? 'selected' : ''}`}
                 onClick={() => handleBoardChange('정보게시판')}>정보게시판</p>
 
             <p className={`WorryBoard ${currentBoard === '고민게시판' ? 'selected' : ''}`}
                 onClick={() => handleBoardChange('고민게시판')}>고민게시판</p>
 
-            
             {/* 게시판 내용 표시 */}
             <div className='board'>
                 {mode === 'view' && (
@@ -184,7 +182,7 @@ export default function Village() {
                         />
                         
                         <div className='dividerS' />
-                        <input
+                        <input 
                             type="text"
                             placeholder="게시물 제목 작성하기"
                             value={title}

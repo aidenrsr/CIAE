@@ -12,6 +12,7 @@ function Button({ name, src, alt, onClick }) {
 function Reading() {
     return (
         <>  
+            <Link to={'/home'}><img className='CIAE' src='/CIAE로고 2.png' alt='CIAE' /></Link>
             <div className='RecommendBar'>
                 <p className='NewBookMent'>다른 책을 읽고 싶다면?</p>
                 <div className='RecommendBook1'/>

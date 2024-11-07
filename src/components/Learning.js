@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';  // Link 컴포넌트 가져오기
 
 async function callOpenAI(messages, setAiResponse) {
     const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
@@ -258,6 +259,7 @@ export default function Learning() {
 
     return (
         <div>
+            <Link to={'/home'}><img className='CIAE' src='/CIAE로고 2.png' alt='CIAE' /></Link>
             {showAI ? (
                 <Ai />
             ) : (

@@ -24,7 +24,7 @@ export default function DeepSea() {
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [gameOverOpacity, setGameOverOpacity] = useState(0);
-    const [life, setLife] = useState(0); // 목숨 초기값
+    const [life, setLife] = useState(3); // 초기 목숨
     const backgroundRef = useRef(null);
 
     const turtleSpeed = 20;
@@ -32,19 +32,9 @@ export default function DeepSea() {
     const [sharkSpeed, setSharkSpeed] = useState(40);
 
     useEffect(() => {
-        // Life 값을 API에서 가져오기
-        axios
-            .get("http://127.0.0.1:5000/api/Life")
-            .then((response) => {
-                setLife(response.data); // API로부터 목숨 값 설정
-            })
-            .catch((error) => console.error("Error fetching Life data:", error));
-    }, []);
-
-    useEffect(() => {
         const turtleMoveInterval = setInterval(() => {
             if (gameOver) return;
-
+            
             setTurtlePosition((pos) => {
                 const backgroundRect = backgroundRef.current.getBoundingClientRect();
                 let newPosition = { ...pos };
@@ -204,24 +194,16 @@ export default function DeepSea() {
             turtleRect.bottom > sharkRect.top
         ) {
             setLife((prevLife) => {
-                if (prevLife <= 0) return prevLife; // 목숨이 0 이하로 내려가지 않게 설정
                 const newLife = prevLife - 1;
-                if (newLife <= 0) setGameOver(true);
-
-                // 목숨이 감소할 때 API에 업데이트
-                axios
-                    .put("http://127.0.0.1:5000/api/Life", { Life: newLife })
-                    .then((response) => {
-                        console.log("Life successfully updated:", response.data);
-                    })
-                    .catch((error) => {
-                        console.error("Error updating Life data:", error);
-                    });
-
+                if (newLife <= 0) {
+                    setGameOver(true);
+                } else {
+                    setGameOver(true); // 게임 오버 화면 표시
+                }
                 return newLife;
             });
         }
-    }, [turtlePosition, fishPosition, sharkPosition, life, gameOver]); // gameOver 상태 추가
+    }, [turtlePosition, fishPosition, sharkPosition, gameOver]);
 
     useEffect(() => {
         if (gameOver) {

@@ -271,3 +271,12 @@
     z-index: 6; /* 다른 요소 위에 표시 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
 }
+
+.CIAE {
+    width: 8rem;
+    z-index: 5;
+    position: absolute;
+    top: 0.1vh;
+    left: 2vw;
+    cursor: pointer;
+}

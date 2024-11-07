@@ -113,3 +113,12 @@ a {
     top: 5vh;
     display: flex;
 }
+
+.CIAE {
+    width: 8rem;
+    z-index: 5;
+    position: absolute;
+    top: 0.1vh;
+    left: 2vw;
+    cursor: pointer;
+}
