@@ -52,3 +52,18 @@ CREATE TABLE book_page (
   page_pdf TEXT NOT NULL,
   PRIMARY KEY (book_id, page_num)  -- Composite primary key
 );
+
+CREATE TABLE chapter_page (
+  chapter_id SERIAL PRIMARY KEY,
+  book_id INTEGER REFERENCES book(book_id),
+  start_page INTEGER NOT NULL,
+  end_page INTEGER NOT NULL
+);
+
+
+CREATE TABLE score (
+  identification_score INTEGER NOT NULL,
+  catharsis_score INTEGER NOT NULL,
+  insight_score INTEGER NOT NULL,
+  score_total INTEGER NOT NULL
+);
