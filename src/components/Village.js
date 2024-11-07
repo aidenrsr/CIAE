@@ -1,10 +1,10 @@
 import './css/Village.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function CustomDropdown({ options, selectedOption, onOptionSelect }) {
     const [isOpen, setIsOpen] = useState(false);
-
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     return (
@@ -42,10 +42,17 @@ export default function Village() {
     const [selectedPost, setSelectedPost] = useState(null);
     const [replies, setReplies] = useState('');
     const [showReplyInput, setShowReplyInput] = useState(false);
-    const [posts, setPosts] = useState({ 자유게시판: [], 정보게시판: [], 고민게시판: [] });
-    const [hasLiked, setHasLiked] = useState(false); // 좋아요 여부 상태
-    const [likeCount, setLikeCount] = useState(0); // 좋아요 수 상태
+    const [posts, setPosts] = useState([]);
+    const [hasLiked, setHasLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
     const [selectedBoard, setSelectedBoard] = useState('자유게시판'); 
+
+    // 게시물 목록 불러오기
+    useEffect(() => {
+        axios.get(`http://127.0.0.1:5000/api/posts?board=${currentBoard}`)
+            .then(response => setPosts(response.data))
+            .catch(error => console.error("Error fetching posts:", error));
+    }, [currentBoard]);
 
     const handleBoardChange = (newBoard) => {
         setCurrentBoard(newBoard);
@@ -57,31 +64,40 @@ export default function Village() {
     };
 
     const handleSearch = () => {
-        console.log(`Searching for: ${searchTerm}`);
+        axios.get(`http://127.0.0.1:5000/api/posts?board=${currentBoard}&search=${searchTerm}`)
+            .then(response => setPosts(response.data))
+            .catch(error => console.error("Error searching posts:", error));
     };
 
     const handlePostClick = () => {
         setMode('post');
     };
 
+    // 게시물 작성하기
     const handlePostSubmit = () => {
         if (title && content) {
-            setPosts((prevPosts) => ({
-                ...prevPosts,
-                [selectedBoard]: [...prevPosts[selectedBoard], { title, content, replies: [] }],
-            }));
-            setCurrentBoard(selectedBoard); // 선택한 게시판으로 이동
-            setMode('view');
-            setTitle('');
-            setContent('');
+            axios.post('http://127.0.0.1:5000/api/posts', {
+                title,
+                content,
+                board_type: selectedBoard
+            })
+            .then(() => {
+                setCurrentBoard(selectedBoard);
+                setMode('view');
+                setTitle('');
+                setContent('');
+                return axios.get(`http://127.0.0.1:5000/api/posts?board=${selectedBoard}`);
+            })
+            .then(response => setPosts(response.data))
+            .catch(error => alert("Error creating post:", error));
         } else {
             alert('제목과 내용을 모두 입력해주세요.');
         }
     };
-    
 
     const handleListItemClick = (post) => {
         setSelectedPost(post);
+        setLikeCount(post.like_count);
         setMode('detail');
     };
 
@@ -89,36 +105,35 @@ export default function Village() {
         setReplies(event.target.value);
     };
 
+    // 댓글 추가하기
     const handleReplySubmit = () => {
         if (replies) {
-            setSelectedPost((prevSelectedPost) => ({
-                ...prevSelectedPost,
-                replies: [...prevSelectedPost.replies, replies],
-            }));
-    
-            setPosts((prevPosts) => ({
-                ...prevPosts,
-                [currentBoard]: prevPosts[currentBoard].map((post) =>
-                    post === selectedPost
-                        ? { ...post, replies: [...post.replies, replies] }
-                        : post
-                ),
-            }));
-    
-            setReplies(''); // 댓글 입력창 초기화
-            setShowReplyInput(false); // 댓글 입력창 숨기기
+            axios.post(`http://127.0.0.1:5000/api/posts/${selectedPost.id}/replies`, { content: replies })
+                .then(response => {
+                    setSelectedPost(prevPost => ({
+                        ...prevPost,
+                        replies: [...prevPost.replies, response.data]
+                    }));
+                    setReplies('');
+                    setShowReplyInput(false);
+                })
+                .catch(error => console.error("Error posting reply:", error));
         }
     };
-    
 
     const toggleReplyInput = () => {
         setShowReplyInput(!showReplyInput);
     };
 
+    // 좋아요 클릭
     const handleHeartClick = () => {
         if (!hasLiked) {
-            setHasLiked(true);
-            setLikeCount(likeCount + 1);
+            axios.put(`http://127.0.0.1:5000/api/posts/${selectedPost.id}/like`)
+                .then(() => {
+                    setHasLiked(true);
+                    setLikeCount(prevCount => prevCount + 1);
+                })
+                .catch(error => console.error("Error liking post:", error));
         }
     };
 
@@ -138,7 +153,6 @@ export default function Village() {
             <p className={`WorryBoard ${currentBoard === '고민게시판' ? 'selected' : ''}`}
                 onClick={() => handleBoardChange('고민게시판')}>고민게시판</p>
 
-            
             {/* 게시판 내용 표시 */}
             <div className='board'>
                 {mode === 'view' && (
@@ -158,7 +172,7 @@ export default function Village() {
                         </div>
                         <div className='contentBorder' />
                         <ul>
-                            {posts[currentBoard].map((post, index) => (
+                            {posts.map((post, index) => (
                                 <div
                                     className='userList'
                                     key={index}
@@ -175,8 +189,6 @@ export default function Village() {
                 {mode === 'post' && (
                     <div>
                         <img className='WritingAvatar' src='/58.png' alt='Avatar'/>
-                        
-                        {/* 게시판 선택 드롭다운 */}
                         <CustomDropdown
                             options={["자유게시판", "정보게시판", "고민게시판"]}
                             selectedOption={selectedBoard}
@@ -200,67 +212,58 @@ export default function Village() {
                         <button className="LetsPost" onClick={handlePostSubmit}>게시하기</button>
                     </div>
                 )}
-    {mode === 'detail' && selectedPost && (
-    <div>
-        <div className="dropdownHeader">
-                {selectedBoard}
-        </div>
-        <div className='dividerS' />
-        <img className='Avatar' src='/58.png' alt='profile'/>
+                {mode === 'detail' && selectedPost && (
+                    <div>
+                        <div className="dropdownHeader">
+                            {selectedBoard}
+                        </div>
+                        <div className='dividerS' />
+                        <img className='Avatar' src='/58.png' alt='profile'/>
                         <h2 className='viewTitle'>{selectedPost.title}</h2>
-                        {/* 문단 나눔 유지하여 보여주기 */}
                         <div className='viewContent' style={{ whiteSpace: 'pre-wrap' }}>{selectedPost.content}</div>
-        {/* 좋아요 섹션 */}
-        <div onClick={handleHeartClick}>
-            <img 
-                className='Heart' 
-                src={hasLiked ? '/favorite_filled.png' : '/favorite.png'} 
-                alt='heart'
-                style={{ filter: hasLiked ? 'invert(34%) sepia(98%) saturate(7496%) hue-rotate(353deg) brightness(101%) contrast(110%)' : 'none' }}
-            />
-            <p className='HeartNum'>{likeCount}</p>
-        </div>
-        
-        {/* 댓글달기 버튼 */}
-        <div onClick={toggleReplyInput}>
-            <img className='UsersendReply' src='/send.png' alt='send'/>
-            <p className='Respond'>댓글달기</p>
-        </div>
+                        <div onClick={handleHeartClick}>
+                            <img 
+                                className='Heart' 
+                                src={hasLiked ? '/favorite_filled.png' : '/favorite.png'} 
+                                alt='heart'
+                                style={{ filter: hasLiked ? 'invert(34%) sepia(98%) saturate(7496%) hue-rotate(353deg) brightness(101%) contrast(110%)' : 'none' }}
+                            />
+                            <p className='HeartNum'>{likeCount}</p>
+                        </div>
+                        
+                        <div onClick={toggleReplyInput}>
+                            <img className='UsersendReply' src='/send.png' alt='send'/>
+                            <p className='Respond'>댓글달기</p>
+                        </div>
 
-        {/* 구분선 */}
-        <div className='divider' />
+                        <div className='divider' />
+                        {showReplyInput && (
+                            <div className='fixedReply'>
+                                <input
+                                    className='reply'
+                                    placeholder='댓글 달기'
+                                    value={replies}
+                                    onChange={handleReplyChange}
+                                />
+                                <img
+                                    className='replyPost'
+                                    src='/send.png'
+                                    alt='send'
+                                    onClick={handleReplySubmit}
+                                />
+                            </div>
+                        )}
 
-        {/* 댓글 입력 */}
-        {showReplyInput && (
-            <div className='fixedReply'>
-                <input
-                    className='reply'
-                    placeholder='댓글 달기'
-                    value={replies}
-                    onChange={handleReplyChange}
-                />
-                <img
-                    className='replyPost'
-                    src='/send.png'
-                    alt='send'
-                    onClick={handleReplySubmit}
-                />
-            </div>
-        )}
-
-                {/* 댓글 목록 */}
-                 <div className='replyList'>
-                {selectedPost.replies && selectedPost.replies.map((reply, index) => (
-                    <li key={index} className='replyItem'>
-                        <img className='ReplyAvatar' src='/58.png' alt='avatar'></img>
-                        <p className='ReplyText'>{reply}</p>
-                    </li>
-                ))}
-                </div>
-
-            </div>
-        )}
-
+                        <div className='replyList'>
+                            {selectedPost.replies && selectedPost.replies.map((reply, index) => (
+                                <li key={index} className='replyItem'>
+                                    <img className='ReplyAvatar' src='/58.png' alt='avatar'></img>
+                                    <p className='ReplyText'>{reply.content}</p>
+                                </li>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -24,7 +24,7 @@ export default function DeepSea() {
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [gameOverOpacity, setGameOverOpacity] = useState(0);
-    const [life, setLife] = useState(3); // 초기 목숨값
+    const [life, setLife] = useState(); // 초기 목숨값
     const backgroundRef = useRef(null);
 
     const turtleSpeed = 20;
