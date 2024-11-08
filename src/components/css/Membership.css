@@ -1,0 +1,32 @@
+.JoinWon {
+    width: 76.8229vw;
+    height: 76.8229vw;
+    flex-shrink: 0;
+    border-radius: 1000px;
+    background: #FFF;
+    position: absolute;
+    left: 11.5885vw;
+    top: -13.3333vh;
+    z-index: 1;
+    transition: top 1s ease;
+}
+
+input {
+    width: 23.0083vw;
+    height: 5.8778vh;
+    flex-shrink: 0;
+    border-radius: 2rem;
+    background: #D9D9D9;
+    border-width: 0;
+    padding-left: 2vw;
+}
+
+input::placeholder {
+    color: #7B7B7B;
+    text-align: left;
+    font-family: Inter;
+    font-size: 1.3rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 30px */
+}

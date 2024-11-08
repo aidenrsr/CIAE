@@ -12,6 +12,7 @@ import Space from './components/TurtleVillage/Space';
 import Sky from './components/TurtleVillage/Sky';
 import Forest from './components/TurtleVillage/Forest';
 import Recommend from './components/Recommend';
+import Membership from './components/Membership';
 
 function List(props) {
   return (
@@ -32,8 +33,8 @@ function Logo() {
 function App() {
   const location = useLocation();
   
-  const hideBackgroundPaths = ['/Login'];
-  const hideNavPaths = ['/Learning', '/Login', '/Recommend'];
+  const hideBackgroundPaths = [];
+  const hideNavPaths = ['/Learning', '/Login', '/Recommend', '/Membership'];
   const showNav = !hideNavPaths.includes(location.pathname);
   const showBackground = !hideBackgroundPaths.includes(location.pathname);
   return (
@@ -73,6 +74,7 @@ function App() {
         <Route path="/Sky" element={<Sky />} />
         <Route path="/Forest" element={<Forest />} />
         <Route path="/Recommend" element={<Recommend />} />
+        <Route path="/Membership" element={<Membership />} />
       </Routes>
     </div>
 );

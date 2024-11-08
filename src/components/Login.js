@@ -26,14 +26,6 @@ function Button(props) {
   );
 }
 
-// Membership Button Component
-function MembershipButton() {
-  return (
-    <Link to='/Membership'>
-      <button className='membership-button'>회원가입</button>
-    </Link>
-  );
-}
 
 // Main Login Component
 export default function Login() {
@@ -63,12 +55,13 @@ export default function Login() {
 
   return (
     <div>
+      <Link to='/Home'><img className='CIAELogo' src='/CIAE로고 2.png' alt='CIAE'/></Link>
       <div className='won'></div>
       <div className='Logi'>
         <Form
           type='email' 
           name='email'
-          label='이메일'
+          label='닉네임'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -80,7 +73,8 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)} 
         />       
         <Button name='로그인' onClick={handleSubmit} />
-        <MembershipButton /> {/* 회원가입 버튼 추가 */}
+        <p className='ifNoAccount'>아직 계정이 없다면?</p>
+        <Link to='/Membership'><p className='Join'>회원가입</p></Link>
       </div>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     </div>

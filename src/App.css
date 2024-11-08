@@ -113,3 +113,11 @@ a {
     top: 5vh;
     display: flex;
 }
+
+.CIAELogo {
+    width: 8%;
+    position: absolute;
+    top: 2vh;
+    left: 2vw;
+    z-index: 5;
+}

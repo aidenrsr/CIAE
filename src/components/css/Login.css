@@ -12,51 +12,50 @@
     border-radius: 130.2915vw;
     background: #FFF;
     position: absolute; /* 위치를 설정할 수 있도록 */
-    left: 45.3438vw; 
+    right: 47.3438vw; 
     top: -55.8148vh;
 }
 
 input {
-    display: flex;
-    width: 22.5417vw;
-    height: 1.8888vh;
-    padding: 0.8860vw;
-    align-items: center;
-    gap: 0.8860vw;
-    border-radius: 88.6015vw;
-    background: #EBEBEB;
-    border: 0cm;
-}
-
-button {
-    display: flex;
-    width: 24.5vw;
-    height: 5.2167vh;
-    padding: 1.1772vw;
-    justify-content: center;
-    align-items: center;
-    gap: 0.3472vw;
-    border-radius: var(--Corner-Full, 34.7222vw);
-    background: #52BDFF;
-    border: 0cm;
-    color: #FFF;
-    text-align: center;
-    font-family: Inter;
-    font-size: 30.078px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 100%; /* 35.078px */
+    width: 23.0083vw;
+    height: 5.8778vh;
+    flex-shrink: 0;
+    border-radius: 2rem;
+    background: #D9D9D9;
+    border-width: 0;
+    padding-left: 2vw;
 }
 
 input::placeholder {
-    color: #A9A9A9;
+    color: #7B7B7B;
     text-align: left;
     font-family: Inter;
-    font-size: 30.078px;
+    font-size: 1.3rem;
     font-style: normal;
-    font-weight: 400;
-    line-height: 100%; /* 35.078px */
+    font-weight: 600;
+    line-height: 100%; /* 30px */
 }
+
+
+button {
+    display: flex;
+    width: 25.0083vw;
+    height: 5.8778vh;
+    border-radius: 2rem;
+    border-width: 0;
+    background: #52BDFF;
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.3rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 30px */
+    padding-top: 1.8vh;
+    padding-left: 10.6vw;
+}
+
+
 
 .email {
     margin-bottom: 20px;
@@ -69,9 +68,52 @@ input::placeholder {
 .Logi {
     position: absolute;
     top: 38.8889vh;
-    right: 12.5000vw;
+    left: 12.5000vw;
 }
 
-.membership-button {
-    margin-top: 20px;
+.ifNoAccount {
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 30px */
+    position: absolute;
+    top: 23vh;
+    left: 4vw;
+}
+
+.Join {
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 30px */
+    border-bottom: #000 ;
+    position: absolute;
+    top: 23vh;
+    left: 14vw;
+}
+
+.NameAndPassword {
+    border-width: 0;
+    position: absolute;
+    top: 57.2592vh;
+    left: 27.3vw;
+}
+
+.SetNickname {
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 30px */
+    position: absolute;
+    top: 49vh;
+    left: 28.9vw;
 }
