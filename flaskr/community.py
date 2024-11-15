@@ -98,8 +98,8 @@ class MessageResource(Resource):
 # api.add_namespace(messages_ns, path="/chat")
 
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 
 # if __name__ == "__main__":
 #     app.run(debug=True)
