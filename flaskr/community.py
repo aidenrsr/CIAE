@@ -1,17 +1,16 @@
-from flask import Flask,request
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-from flask_restx import Api, Resource
+from flask_restx import Api, Namespace, Resource, fields
 from datetime import datetime, timezone
 
 app = Flask(__name__)
-
 app.config['JWT_SECRET_KEY'] = 'aidenryu'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@127.0.0.1:5001/chatting'
+
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
 api = Api(app)
-
 
 # Database Models
 class User(db.Model):
@@ -34,17 +33,36 @@ class Message(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
 
+# namespace
+messages_ns = Namespace("messages")
 
-@api.route('/messages')
-class MessageResource(Resource):
+message_model = messages_ns.model(
+    "Message",
+    {
+        "message_id": fields.Integer(),
+        "username": fields.String(),
+        "text": fields.String(),
+        "timestamp": fields.DateTime(),
+    },
+)
+
+@messages_ns.route("/messages")
+class MessagesResource(Resource):
+    @messages_ns.marshal_list_with(message_model)
+    def get(self):
+        chat = Message.query.order_by(Message.timestamp.asc()).all()
+        return chat
+    
+    @messages_ns.expect(message_model)
+    @messages_ns.marshal_with(message_model)
     @jwt_required()
     def post(self):
         # get the user id from JWT
         user_id = get_jwt_identity()
         # fetch the user from the database
-        user = User.query.get(user_id)
+        user = User.query.get_or_404(user_id)
         # get the message text from the request body
-        data = request.json
+        data = request.get_json()
         text = data.get('text', '').strip()
         if not text:
             return {'Message cannot be empty'}, 400
@@ -54,16 +72,34 @@ class MessageResource(Resource):
         db.session.commit()
 
         return {'Message sent'}, 201
-    
-    # 다끌고와서 시간순으로 나열 그다음 형식대로 정리.
-    def get(self):
-        chat = Message.query.order_by(Message.timestamp.asc()).all()
-        response = [
-            {
-                'username': message.username,
-                'text': message.text,
-                'timestamp': message.timestamp.strftime('%Y-%m-%d %H:%M:%S')
-            }
-            for message in chat
-        ]
-        return response, 200
+
+@messages_ns.route("/messages/<int:message_id>")
+class MessageResource(Resource):
+    @messages_ns.marshal_with(message_model)
+    def get(self, message_id):
+        # find message using id
+        message = Message.query.get_or_404(message_id)
+        return message
+
+    @jwt_required()
+    def delete(self, message_id):
+        user_id = get_jwt_identity()
+        user = User.query.get_or_404(user_id)
+        message_to_delete = Message.query.get_or_404(message_id)
+        # check if user and message writer match
+        if user.username != message_to_delete.username:
+            return {"error"}, 403
+        
+        db.session.delete(message_to_delete)
+        db.session.commit()
+        return {"Message deleted"}, 200
+
+
+# api.add_namespace(messages_ns, path="/chat")
+
+
+# with app.app_context():
+#     db.create_all()
+
+# if __name__ == "__main__":
+#     app.run(debug=True)

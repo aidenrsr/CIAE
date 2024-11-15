@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS user_point;
 DROP TABLE IF EXISTS user_badges;
 DROP TABLE IF EXISTS book;
 DROP TABLE IF EXISTS book_page;
+DROP TABLE IF EXISTS messages;
 
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY,
@@ -15,6 +16,13 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   -- Please add 
+);
+
+CREATE TABLE messages (
+    message_id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL REFERENCES users(username),
+    text TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE user_book_interaction (
