@@ -17,6 +17,13 @@ CREATE TABLE users (
   -- Please add 
 );
 
+CREATE TABLE messages (
+    message_id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL,
+    text TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE badges (
   badge_id SERIAL PRIMARY KEY,
   badge_name TEXT NOT NULL,
