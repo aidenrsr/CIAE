@@ -1,4 +1,6 @@
-from flask import Flask, redirect, url_for, session, g
+from flask import Flask, redirect, url_for, session, jsonify
+from flask_restx import Api, Resource
+from flask_sqlalchemy import SQLAlchemy
 from authlib.integrations.flask_client import OAuth
 import os
 from datetime import timedelta
@@ -9,12 +11,13 @@ from flaskr.db import get_db
 load_dotenv()
 
 app = Flask(__name__)
+api = Api(app)
 
 app.secret_key = os.getenv("APP_SECRET_KEY")
 app.config["SESSION_COOKIE_NAME"] = "google-login-session"
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=5)
 
-
+db = SQLAlchemy(app)
 oauth = OAuth(app)
 google = oauth.register(
     name="google",
@@ -31,32 +34,41 @@ google = oauth.register(
 )
 
 
-@app.route("/")
+@api.route("/")
 @login_required
 def hello_world():
     email = dict(session)["profile"]["email"]
     return f"logged in as {email}!"
 
 
-@app.route("/login")
-def login():
-    google = oauth.create_client("google")
-    redirect_uri = url_for("authorize", _external=True)
-    return google.authorize_redirect(redirect_uri)
+@api.route("/login")
+class LoginResource(Resource):
+    def get(self):
+        google = oauth.create_client("google")
+        redirect_uri = url_for("authorize", _external=True)
+        return google.authorize_redirect(redirect_uri)
 
 
-@app.route("/authorize")
-def authorize():
-    google = oauth.create_client("google")
-    token = google.authorize_access_token()  # not really necessary to assign to "token"
-    resp = google.get("userinfo")
-    user_info = resp.json()
-    # user = oauth.google.userinfo()
-    session["profile"] = user_info
-    email = user_info["email"]
-    session.permanent = True
-    db = get_db()
-    return redirect("/")
+@api.route("/authorize")
+class AuthorizeResource(Resource):
+    def get(self):
+        google = oauth.create_client("google")
+        token = google.authorize_access_token()  # not really necessary to assign to "token"
+        resp = google.get("userinfo")
+        user_info = resp.json()
+        # extract user info
+        email = user_info.get("email")
+        name = user_info.get("name")
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            user = User(email=email, name=name, profile_picture=profile_picture)
+            db.session.add(user)
+            db.session.commit()
+        
+        session["profile"] = user_info
+        session.permanent = True
+        
+        return redirect("/")
 
 
 @app.route("/logout")

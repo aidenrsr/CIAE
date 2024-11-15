@@ -17,14 +17,6 @@ CREATE TABLE users (
   -- Please add 
 );
 
-<<<<<<< HEAD
-CREATE TABLE messages (
-    message_id SERIAL PRIMARY KEY,
-    username TEXT NOT NULL,
-    text TEXT NOT NULL,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-=======
 CREATE TABLE user_book_interaction (
   interaction_id SERIAL PRIMARY KEY,
   user_id SERIAL REFERENCES users(user_id),
@@ -33,7 +25,6 @@ CREATE TABLE user_book_interaction (
   score INTEGER NOT NULL,
   last_interacted TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
->>>>>>> ecf9e701 (temp)
 
 CREATE TABLE badges (
   badge_id SERIAL PRIMARY KEY,
